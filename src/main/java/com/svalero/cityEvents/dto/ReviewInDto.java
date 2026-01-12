@@ -9,11 +9,10 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class ReviewInDto {
+public class ReviewInDto { //los datos facilitados al registrar una review
 
     private LocalDate registerDate;
     private boolean recommend;
-    private boolean visible;
     private int rate;
     private String comment;
     private long eventId;

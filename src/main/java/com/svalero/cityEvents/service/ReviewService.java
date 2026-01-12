@@ -25,11 +25,8 @@ public class ReviewService {
         Review review = new Review(); //creamos una review con all lo que recibimos
         review.setEvent(event);
         review.setUser(user);
-        review.setRate(reviewInDto.getRate());
-        review.setVisible(reviewInDto.isVisible());
-        review.setRegisterDate(reviewInDto.getRegisterDate());
-        review.setComment(reviewInDto.getComment());
-        review.setRecommend(reviewInDto.isRecommend());
+
+        modelMapper.map(reviewInDto, review);
 
         return reviewRepository.save(review);
     }

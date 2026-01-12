@@ -1,5 +1,6 @@
 package com.svalero.cityEvents.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -33,5 +34,6 @@ public class Event {
     private float price;
 
     @OneToMany(mappedBy = "event")
+    @JsonBackReference
     private List<Review> reviews;
 }

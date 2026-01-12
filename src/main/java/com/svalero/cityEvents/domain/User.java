@@ -1,5 +1,6 @@
 package com.svalero.cityEvents.domain;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,5 +29,6 @@ public class User {
     private boolean active;
 
     @OneToMany(mappedBy = "user")
+    @JsonBackReference
     private List<Review> reviews;
 }
