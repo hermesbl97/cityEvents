@@ -1,0 +1,168 @@
+openapi: 3.0.1
+info:
+  title: CityEvents
+  description: API informativa de los eventos de tu ciudad.
+  version: 1.0.0
+servers:
+  - url: 'https://cityEvents.com'
+paths:
+  /events:
+    get:
+      summary: Devuelve lista de eventos
+      description: | 
+        Nos devuelve una lista completa con todos los elementos. 
+        Se puede realizar búsqueda tanto de la lista completa como realizar un filtrado por categoría.
+      parameters:
+        - name: category
+          in: query
+          description: Filtra por categoría del juego
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/EventOutDto'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      summary: Registrar evento
+      description: Nos permite registr un nuevo evento en nuestra base de datos.
+      requestBody:
+        description: Los datos del nuevo evento
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventInDto'
+      responses:
+        '201':
+          description: Evento registrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+components:
+  schemas:
+    Event:
+      allOf:
+        - $ref: '#/components/schemas/EventInDto'
+      type: object
+      properties:
+        id:
+          type: number
+          format: int64
+          description: Identificador del evento
+      example:
+        id: 1
+        name: Concierto Extremoduro
+        description: Concierto última gira de Extremoduro
+        eventDate: 2025-02-04
+        category: Concierto
+        capacity: 27.000
+        price: 30.0
+    EventInDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre del evento
+        description:
+          type: string
+          description: Descripción del evento
+        eventDate:
+          type: string
+          format: date
+          description: Fecha en la que tendrá lugar el evento
+        category:
+          type: string
+          description: Tipo de evento
+        capacity:
+          type: number
+          format: double
+          description: Capacidad de aforo del evento
+        price:
+          type: number
+          format: float
+          description: Coste del acceso al evento
+      example:
+        name: Concierto Extremoduro
+        description: Concierto última gira de Extremoduro
+        eventDate: 2025-02-04
+        category: Concierto
+        capacity: 27.000
+        price: 30.0
+    EventOutDto:
+      type: object
+      properties:
+        id:
+          type: number
+          format: int64
+          description: Identificador del evento
+        name:
+          type: string
+          description: Nombre del evento
+        eventDate:
+          type: string
+          format: date
+          description: Fecha en la que tendrá lugar el evento
+        category:
+          type: string
+          description: Tipo de evento
+        price:
+          type: number
+          format: float
+          description: Coste del acceso al evento
+      example:
+        id: 1
+        name: Concierto Extremoduro
+        eventDate: 2025-02-04
+        category: Concierto
+        price: 30
+    ErrorResponse:
+      type: object
+      properties:
+        code:
+          type: number
+          format: int
+          description: Código de estado
+        message:
+          type: string
+          description: Mensaje de error
+        title:
+          type: string
+          description: Tipo de error
+    InternalServerError:
+      allOf:
+        - $ref: '#/components/schemas/ErrorResponse'
+      example:
+        code: 500
+        message: Internal Server Error
+        title: internal-server-error
+    BadRequest:
+      allOf:
+        - $ref: '#/components/schemas/ErrorResponse'
+      example:
+        code: 400
+        message: Validation Error
+        title: bad-request
