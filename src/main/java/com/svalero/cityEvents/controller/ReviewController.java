@@ -1,9 +1,15 @@
 package com.svalero.cityEvents.controller;
 
+import com.svalero.cityEvents.domain.Event;
+import com.svalero.cityEvents.domain.Location;
 import com.svalero.cityEvents.domain.Review;
-import com.svalero.cityEvents.exception.ErrorResponse;
-import com.svalero.cityEvents.exception.ReviewNotFoundException;
+import com.svalero.cityEvents.domain.User;
+import com.svalero.cityEvents.dto.ReviewInDto;
+import com.svalero.cityEvents.exception.*;
+import com.svalero.cityEvents.service.EventService;
+import com.svalero.cityEvents.service.LocationService;
 import com.svalero.cityEvents.service.ReviewService;
+import com.svalero.cityEvents.service.UserService;
 import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,6 +23,10 @@ public class ReviewController {
 
     @Autowired
     private ReviewService reviewService;
+    @Autowired
+    private EventService eventService;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/reviews")
     public ResponseEntity<List<Review>> getAll(@RequestParam(value = "username", defaultValue = "") String username) {
@@ -38,9 +48,13 @@ public class ReviewController {
     }
 
     @PostMapping("/reviews")
-    public ResponseEntity<Review> addReview(@RequestBody Review review) {
-        Review newReview = reviewService.add(review);
-        return new ResponseEntity<>(newReview, HttpStatus.CREATED);
+    public ResponseEntity<Review> addReview(@RequestBody ReviewInDto reviewInDto) throws EventNotFoundException, UserNotFoundException {
+        Event event = eventService.findById(reviewInDto.getEventId());
+        User user = userService.findUserById(reviewInDto.getUserId());
+
+        Review newReview = reviewService.add(reviewInDto, event, user);
+
+        return new ResponseEntity<>(newReview,HttpStatus.CREATED);
     }
 
     @PutMapping("/reviews/{id}")

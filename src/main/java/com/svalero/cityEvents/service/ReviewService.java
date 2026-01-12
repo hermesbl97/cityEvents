@@ -1,6 +1,10 @@
 package com.svalero.cityEvents.service;
 
+import com.svalero.cityEvents.domain.Event;
+import com.svalero.cityEvents.domain.Location;
 import com.svalero.cityEvents.domain.Review;
+import com.svalero.cityEvents.domain.User;
+import com.svalero.cityEvents.dto.ReviewInDto;
 import com.svalero.cityEvents.exception.ReviewNotFoundException;
 import com.svalero.cityEvents.repository.ReviewRepository;
 import org.modelmapper.ModelMapper;
@@ -17,7 +21,13 @@ public class ReviewService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public Review add(Review review) {
+    public Review add(ReviewInDto reviewInDto, Event event, User user) {
+        Review review = new Review(); //creamos una review con all lo que recibimos
+        review.setEvent(event);
+        review.setUser(user);
+
+        modelMapper.map(reviewInDto, review);
+
         return reviewRepository.save(review);
     }
 

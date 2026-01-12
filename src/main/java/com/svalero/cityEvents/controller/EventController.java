@@ -1,14 +1,15 @@
 package com.svalero.cityEvents.controller;
 
 import com.svalero.cityEvents.domain.Event;
+import com.svalero.cityEvents.dto.EventOutDto;
 import com.svalero.cityEvents.exception.ErrorResponse;
 import com.svalero.cityEvents.exception.EventNotFoundException;
 import com.svalero.cityEvents.service.EventService;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.RepositoryDefinition;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Repository;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,9 +19,11 @@ public class EventController {
 
     @Autowired
     private EventService eventService;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @GetMapping("/events")
-    public ResponseEntity<List<Event>> getAll(@RequestParam(value = "category", defaultValue = "") String category) {
+    public ResponseEntity<List<EventOutDto>> getAll(@RequestParam(value = "category", defaultValue = "") String category) {
         List<Event> allEvents;
 
         if (!category.isEmpty()){
@@ -29,7 +32,11 @@ public class EventController {
             allEvents = eventService.findAll();
         }
 
-        return ResponseEntity.ok(allEvents);
+        //Le decimos que nos mapee la lista de juegos a una lista con el objeto Dto que queremos mostrar. Y que mapee campo a campo los que coincidan
+        List<EventOutDto> eventsOutDto = modelMapper.map(allEvents, new TypeToken<List<EventOutDto>>() {}.getType());
+
+
+        return ResponseEntity.ok(eventsOutDto);
     }
 
     @GetMapping("/events/{id}")

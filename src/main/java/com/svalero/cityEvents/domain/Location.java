@@ -29,6 +29,4 @@ public class Location {
     @Column
     private boolean accesible;
 
-    @OneToMany(mappedBy = "location")
-    private List<Review> reviews;
 }

@@ -23,10 +23,12 @@ public class Review {
     private LocalDate registerDate;
     @Column
     private boolean visible;
+    @Column
+    private boolean recommend;
 
     @ManyToOne  //establecemos la relaciones que tienen entre ellos
-    @JoinColumn(name = "location_id")
-    private Location location;
+    @JoinColumn(name = "event_id")
+    private Event event;
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
