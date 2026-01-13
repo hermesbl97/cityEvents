@@ -33,8 +33,8 @@ public class User {
     @Column(name = "birth_date")
     private LocalDate birthDate;
     @Column(name = "telephone_number")
-    @Min(value = 600000000, message = "The telephone must have this structur 6XX XXX XXX")
-    @Max(value = 699999999, message = "The telephone must have this structur 6XX XXX XXX")
+    @Min(value = 600000000, message = "The telephone must have this structure 6XX XXX XXX")
+    @Max(value = 699999999, message = "The telephone must have this structure 6XX XXX XXX")
     private int telephoneNumber;
     @Column
     private boolean active;

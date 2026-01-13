@@ -39,6 +39,11 @@ public class LocationService {
         return locations;
     }
 
+    public List<Location> findByDisabledAccessLocation() {
+        List<Location> locations = locationRepository.findByDisabledAccessTrue();
+        return locations;
+    }
+
     public Location findById(long id) throws  LocationNotFoundException {
         Location location = locationRepository.findById(id)
                 .orElseThrow(LocationNotFoundException::new);

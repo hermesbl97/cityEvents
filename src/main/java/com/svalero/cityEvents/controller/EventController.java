@@ -51,7 +51,6 @@ public class EventController {
         //Le decimos que nos mapee la lista de juegos a una lista con el objeto Dto que queremos mostrar. Y que mapee campo a campo los que coincidan
         List<EventOutDto> eventsOutDto = modelMapper.map(allEvents, new TypeToken<List<EventOutDto>>() {}.getType());
 
-
         return ResponseEntity.ok(eventsOutDto);
     }
 

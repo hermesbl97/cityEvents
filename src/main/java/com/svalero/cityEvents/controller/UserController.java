@@ -12,6 +12,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -23,11 +24,16 @@ public class UserController {
     private UserService userService;
 
     @GetMapping("/usuarios")
-    public ResponseEntity<List<User>> getAllUsers(@RequestParam(value = "name", defaultValue = "") String name) throws UserNotFoundException {
+    public ResponseEntity<List<User>> getAllUsers (
+            @RequestParam(value = "name", required = false) String name,
+            @RequestParam(value = "date", required = false)LocalDate date) throws UserNotFoundException {
+
         List<User> allUsers;
 
-        if (!name.isEmpty()) {
+        if (name != null && !name.isEmpty()) {
             allUsers = userService.findUserByName(name);
+        } else if (date != null){
+            allUsers = userService.findUserBornBefore(date);
         } else {
             allUsers = userService.findAll();
         }
