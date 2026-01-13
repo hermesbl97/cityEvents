@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -23,5 +24,6 @@ public class EventInDto {
     @Min(value = 0, message = "The price must be a positive number")
     private float price;
     private long locationId;
-//    private long artistId;
+
+    private List<Long> artistsIds;
 }

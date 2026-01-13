@@ -77,7 +77,7 @@ public class LocationController {
 
     @ExceptionHandler(LocationNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleException(LocationNotFoundException lnfe) {
-        ErrorResponse errorResponse = ErrorResponse.generalError(404, "not-found", "The event does not exist");
+        ErrorResponse errorResponse = ErrorResponse.notFound("The event does not exist");
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 

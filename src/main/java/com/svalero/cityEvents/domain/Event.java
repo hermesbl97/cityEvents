@@ -43,8 +43,8 @@ public class Event {
     @JoinColumn(name = "location_id")
     private Location location;
 
-//    @ManyToMany
-//    @JoinTable(name = "event_artists", joinColumns = @JoinColumn(name = "event_id"),
-//            inverseJoinColumns = @JoinColumn(name = "artist_id"))
-//    private List<Artist> artists;
+    @ManyToMany
+    @JoinTable(name = "event_artists", joinColumns = @JoinColumn(name = "event_id"),
+            inverseJoinColumns = @JoinColumn(name = "artist_id"))
+    private List<Artist> artists;
 }

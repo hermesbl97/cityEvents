@@ -1,5 +1,6 @@
 package com.svalero.cityEvents.controller;
 
+import com.svalero.cityEvents.domain.Artist;
 import com.svalero.cityEvents.domain.Event;
 import com.svalero.cityEvents.domain.Location;
 import com.svalero.cityEvents.dto.EventInDto;
@@ -7,6 +8,7 @@ import com.svalero.cityEvents.dto.EventOutDto;
 import com.svalero.cityEvents.exception.ErrorResponse;
 import com.svalero.cityEvents.exception.EventNotFoundException;
 import com.svalero.cityEvents.exception.LocationNotFoundException;
+import com.svalero.cityEvents.service.ArtistService;
 import com.svalero.cityEvents.service.EventService;
 import com.svalero.cityEvents.service.LocationService;
 import jakarta.validation.Valid;
@@ -32,6 +34,8 @@ public class EventController {
     private LocationService locationService;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private ArtistService artistService;
 
     @GetMapping("/events")
     public ResponseEntity<List<EventOutDto>> getAll(
@@ -62,8 +66,14 @@ public class EventController {
 
     @PostMapping("/events")
     public ResponseEntity<Event> addEvent(@Valid @RequestBody EventInDto eventInDto) throws LocationNotFoundException {
+        //Buscamos la localización
         Location location = locationService.findById(eventInDto.getLocationId());
-        Event newEvent = eventService.add(location, eventInDto);
+
+        //Buscamos los artistas
+        List<Artist> artists = artistService.findAllArtistsById(eventInDto.getArtistsIds());
+
+        Event newEvent = eventService.add(location, eventInDto, artists);
+
         return new ResponseEntity<>(newEvent, HttpStatus.CREATED);
     }
 
@@ -84,6 +94,12 @@ public class EventController {
     public ResponseEntity<ErrorResponse> handleException(EventNotFoundException enfe) {
         ErrorResponse errorResponse = ErrorResponse.notFound("The event does not exist");
         return new ResponseEntity<>(errorResponse,HttpStatus.NOT_FOUND);
+    }
+
+    @ExceptionHandler(LocationNotFoundException.class)
+    public ResponseEntity<ErrorResponse> handleException(LocationNotFoundException lnfe) {
+        ErrorResponse errorResponse = ErrorResponse.generalError(404, "not-found", "The event does not exist");
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)

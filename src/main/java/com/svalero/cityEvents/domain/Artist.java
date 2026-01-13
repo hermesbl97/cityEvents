@@ -26,6 +26,9 @@ public class Artist {
     @Column
     @NotNull(message = "Surname is mandatory")
     private String surname;
+    @Column
+    @NotNull(message = "Genre is mandatory")
+    private String genre;
     @Column(name = "birth_date")
     private LocalDate birthDate;
     @Column
@@ -38,8 +41,8 @@ public class Artist {
     private float height;
     @Column
     private boolean active;
-//
-//    @ManyToMany(mappedBy = "artists")
-//    @JsonBackReference
-//    private List<Event> events;
+
+    @ManyToMany(mappedBy = "artists")
+    @JsonBackReference
+    private List<Event> events;
 }

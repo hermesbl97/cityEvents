@@ -1,5 +1,6 @@
 package com.svalero.cityEvents.service;
 
+import com.svalero.cityEvents.domain.Artist;
 import com.svalero.cityEvents.domain.Event;
 import com.svalero.cityEvents.domain.Location;
 import com.svalero.cityEvents.dto.EventInDto;
@@ -19,9 +20,10 @@ public class EventService {
     @Autowired
     private ModelMapper modelMapper;
 
-    public Event add(Location location , EventInDto eventInDto){
+    public Event add(Location location , EventInDto eventInDto, List<Artist> artists){
         Event event = new Event(); //creamos un evento con lo que recibimos
         event.setLocation(location);
+        event.setArtists(artists);
 
         modelMapper.map(eventInDto, event);
         return eventRepository.save(event);
