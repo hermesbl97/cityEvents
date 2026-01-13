@@ -36,7 +36,7 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
     post:
       summary: Registrar evento
-      description: Nos permite registr un nuevo evento en nuestra base de datos.
+      description: Nos permite registrar un nuevo evento en nuestra base de datos.
       requestBody:
         description: Los datos del nuevo evento
         content:
@@ -56,6 +56,95 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/BadRequest'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /events/{id}:
+    get:
+      summary: Devuelve vista de un evento
+      description: Devuelve la vista mucho más detallada de un evento en concreto. Búsqueda filtrada por Id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Event'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    put:
+      summary: Editar un evento
+      description: Nos permite modificar, por "Id", los datos de un evento en nuestra base de datos.
+      requestBody:
+        description: Los datos del nuevo evento. Son los que sobreescribiremos sobre el antiguo.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/EventInDto'
+      responses:
+        '200':
+          description: Evento registrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Event'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '404':
+          description: Not Found Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    delete:
+      summary: Borrar evento
+      description: Permite eliminar un evento, por "Id", de la base de datos.
+      responses:
+        '204':
+          description: Evento eliminado de la base de datos. (No devuelve ningún dato).
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '404':
+          description: Not Found Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
         '500':
           description: Internal server error
           content:
@@ -166,3 +255,10 @@ components:
         code: 400
         message: Validation Error
         title: bad-request
+    NotFound:
+      allOf:
+        - $ref: '#/components/schemas/ErrorResponse'
+      example:
+        code: 404
+        message: Not Found Error
+        title: not-found

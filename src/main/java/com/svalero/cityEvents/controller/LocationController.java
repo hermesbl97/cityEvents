@@ -1,12 +1,16 @@
 package com.svalero.cityEvents.controller;
 
 import com.svalero.cityEvents.domain.Location;
+import com.svalero.cityEvents.dto.EventOutDto;
+import com.svalero.cityEvents.dto.LocationOutDto;
 import com.svalero.cityEvents.exception.ErrorResponse;
 import com.svalero.cityEvents.exception.LocationNotFoundException;
 import com.svalero.cityEvents.repository.LocationRepository;
 import com.svalero.cityEvents.service.LocationService;
 import jakarta.validation.Valid;
 import org.apache.coyote.Response;
+import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +28,11 @@ public class LocationController {
 
     @Autowired
     private LocationService locationService;
+    @Autowired
+    private ModelMapper modelMapper;
 
     @GetMapping("/locations")
-    public ResponseEntity<List<Location>> getALL(@RequestParam(value = "category", defaultValue = "") String category) { //indicamos que queremos que filtre por category la busqueda con el Request param
+    public ResponseEntity<List<LocationOutDto>> getALL(@RequestParam(value = "category", defaultValue = "") String category) { //indicamos que queremos que filtre por category la busqueda con el Request param
         List<Location> allLocations;
 
         if (!category.isEmpty()) {
@@ -34,8 +40,9 @@ public class LocationController {
         } else {
             allLocations = locationService.findAll();
         }
+        List<LocationOutDto> locationsOutDto = modelMapper.map(allLocations, new TypeToken<List<LocationOutDto>>() {}.getType());
 
-        return ResponseEntity.ok(allLocations);
+        return ResponseEntity.ok(locationsOutDto);
     }
 
     @GetMapping("/locations/{id}")
@@ -65,7 +72,7 @@ public class LocationController {
 
     @ExceptionHandler(LocationNotFoundException.class)
     public ResponseEntity<ErrorResponse> handleException(LocationNotFoundException lnfe) {
-        ErrorResponse errorResponse = ErrorResponse.generalError(404, "not-found", "The game does not exist");
+        ErrorResponse errorResponse = ErrorResponse.generalError(404, "not-found", "The event does not exist");
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 
