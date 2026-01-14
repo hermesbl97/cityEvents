@@ -8,7 +8,7 @@ servers:
 paths:
   /events:
     get:
-      summary: Devuelve lista de eventos
+      summary: Lista de eventos
       description: | 
         Nos devuelve una lista completa con todos los elementos. 
         Se puede realizar búsqueda tanto de la lista completa como realizar un filtrado tanto por categoría evento como por nombre de la localización donde tiene lugar el evento.
@@ -19,7 +19,7 @@ paths:
           required: false
           schema:
             type: string
-        - name: localName
+        - name: locationName
           in: query
           description: Filtra por nombre de la localización del evento
           required: false
@@ -70,7 +70,7 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
   /events/{id}:
     get:
-      summary: Devuelve vista de un evento
+      summary: Vista de un evento
       description: Devuelve la vista mucho más detallada de un evento en concreto. Búsqueda filtrada por Id
       responses:
         '200':
@@ -159,17 +159,17 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
   /locations:
     get:
-      summary: Devuelve lista de localizaciones
+      summary: Lista de localizaciones
       description: |
         Nos devuelve una lista completa con todas las localizaciones en las que se celebran eventos.
-        Se puede realizar búsqueda tanto de la lista completa como realizar un filtrado tanto por categoría evento como por nombre de la localización donde tiene lugar el evento.
+        Se puede realizar búsqueda tanto de la lista completa como realizar un filtrado tanto por categoría evento como por las localizaciones accesibles para gente con discapacidad.
       parameters:
         - name: category
           in: query
-          description: Filtra por categoría de la localización.
+          description: Filtra por localizaciones que dispongan de acceso para personas con alguna discapacidad.
           required: false
           schema:
-            type: string
+            type: boolean
       responses:
         '200':
           description: OK
@@ -215,7 +215,7 @@ paths:
                 $ref: '#/components/schemas/InternalServerError'
   /locations/{id}:
     get:
-      summary: Devuelve vista de una localización
+      summary: Vista de una localización
       description: Devuelve la vista mucho más detallada de una localización en concreto. Búsqueda filtrada por Id
       responses:
         '200':
@@ -302,6 +302,309 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalServerError'
+  /artists:
+    get:
+      summary: Lista de artistas
+      description: |
+        Nos devuelve una lista completa con todos los artistas. 
+        Se puede realizar búsqueda tanto de la lista completa como realizar un filtrado tanto por tipo de artista como por artistas que siguen en activo .
+      parameters:
+        - name: type
+          in: query
+          description: Filtra por tipo de artista.
+          required: false
+          schema:
+            type: string
+        - name: active
+          in: query
+          description: Filtra por artistas en activo.
+          required: false
+          schema:
+            type: boolean
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Artist'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      summary: Registrar artista
+      description: Nos permite registrar un nuevo artista en nuestra base de datos.
+      requestBody:
+        description: Los datos del nuevo artista
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArtistInDto'
+      responses:
+        '201':
+          description: Artista registrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Artist'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /artists/{id}:
+    get:
+      summary: Vista de un artista
+      description: Devuelve la vista mucho más detallada de un artista en concreto. Búsqueda filtrada por Id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Artist'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    put:
+      summary: Editar un artista
+      description: Nos permite modificar, por "Id", los datos de un artista en nuestra base de datos.
+      requestBody:
+        description: Los datos del nuevo artista. Son los que sobreescribiremos sobre el antiguo.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ArtistInDto'
+      responses:
+        '200':
+          description: Artista registrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Artist'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '404':
+          description: Not Found Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    delete:
+      summary: Borrar artista
+      description: Permite eliminar un artista, por "Id", de la base de datos.
+      responses:
+        '204':
+          description: Artista eliminado de la base de datos. (No devuelve ningún dato).
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '404':
+          description: Not Found Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /reviews:
+    get:
+      summary: Lista de reseñas.
+      description: |
+        Nos devuelve una lista completa con todas las reseñas de los eventos, realizadas por los usuarios. 
+        Se puede realizar búsqueda tanto de la lista completa como realizar un filtrado tanto por el nombre de usuario del que ha hecho la publicación como por el nombre del evento al que corresponden las reseñas.
+      parameters:
+        - name: username
+          in: query
+          description: Filtra todas las reseñas realizadas por un usuario a través de su username.
+          required: false
+          schema:
+            type: string
+        - name: eventName
+          in: query
+          description: Filtra por el nombre del evento sobre el cual se quieren conocer todas sus reseñas
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ReviewOutDto'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    post:
+      summary: Registrar reseña
+      description: Nos permite registrar una nueva reseña en nuestra base de datos.
+      requestBody:
+        description: Los datos de la nueva reseña
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewInDto'
+      responses:
+        '201':
+          description: Reseña registrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+  /reviews/{id}:
+    get:
+      summary: Vista de una reseña
+      description: Devuelve la vista mucho más detallada de una reseña en concreto. Búsqueda filtrada por Id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Review'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '404':
+          description: Not found
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    put:
+      summary: Editar un reseña
+      description: Nos permite modificar, por "Id", los datos de una reseña en nuestra base de datos.
+      requestBody:
+        description: Los datos de la nueva reseña. Son los que sobreescribiremos sobre la antigua.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ReviewInDto'
+      responses:
+        '200':
+          description: Reseña registrada
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '404':
+          description: Not Found Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+    delete:
+      summary: Borrar reseña
+      description: Permite eliminar una reseña, por "Id", de la base de datos.
+      responses:
+        '204':
+          description: Reseña eliminada de la base de datos. (No devuelve ningún dato).
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+        '404':
+          description: Not Found Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NotFound'
+        '500':
+          description: Internal server error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/InternalServerError'
+
 components:
   schemas:
     Event:
@@ -313,6 +616,10 @@ components:
           type: number
           format: int64
           description: Identificador del evento
+        availability:
+          type: boolean
+          default: true
+          description: Identificado si hay entradas disponibles para el evento
       example:
         id: 1
         name: Concierto Extremoduro
@@ -321,6 +628,7 @@ components:
         category: Concierto
         capacity: 27.000
         price: 30.0
+        availability: true
     EventInDto:
       type: object
       properties:
@@ -403,7 +711,7 @@ components:
         name: Teatro Principal
         description: Teatro más importante de la ciudad de Zaragoza.
         category: Teatro
-        disabledAcces: true
+        disabledAccess: true
     LocationInDto:
       type: object
       properties:
@@ -454,7 +762,142 @@ components:
         streetLocated: Coso
         postalCode: 5001
         registerDate: 2026-01-13
-        disabledAcces: true
+        disabledAccess: true
+    Artist:
+      allOf:
+        - $ref: '#/components/schemas/ArtistInDto'
+      type: object
+      properties:
+        id:
+          type: number
+          format: int64
+          description: Identificador del artista
+      example:
+        id: 1
+        name: Sonia
+        surname: García
+        genre: Femenino
+        birthDate: 1985-03-18
+        type: Actor
+        followers: 385000
+        height: 1.68
+        active: true
+    ArtistInDto:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre del artista
+        surname:
+          type: string
+          description: Apellido del artista
+        genre:
+          type: string
+          description: Género del artista
+        birthDate:
+          type: string
+          format: date
+          description: Fecha de nacimiento del artista
+        type:
+          type: string
+          description: Tipo de artista
+        followers:
+          type: number
+          format: double
+          description: Número de seguidores que tiene el artista
+        height:
+          type: number
+          format: float
+          description: Altura del artista
+        active:
+          type: boolean
+          description: Especifica si el artista sigue en activo
+      example:
+        name: Sonia
+        surname: García
+        genre: Femenino
+        birthDate: 1985-03-18
+        type: Actor
+        followers: 385000
+        height: 1.68
+        active: true
+    ReviewInDto:
+      type: object
+      properties:
+        rate:
+          type: float
+          description: Puntuación de la reseña
+        comment:
+          type: string
+          description: Comentario de la reseña
+        registerDate:
+          type: string
+          format: date
+          description: Fecha en la que se registra la reseña
+        recommend:
+          type: boolean
+          description: Devuelve si el usuario recomienda o no el evento.
+      example:
+        rate: 4.3
+        comment: Me ha encantadoa el concierto
+        registerDate: 2025-02-04
+        recommend: true
+    Review:
+      allOf:
+        - $ref: '#/components/schemas/ReviewInDto'
+      type: object
+      properties:
+        id:
+          type: number
+          format: int64
+          description: Identificador de la reseña
+        visible:
+          type: boolean
+          default: true
+          description: Indica si la reseña es visible para los usuarios.
+        likes:
+          type: number
+          format: double
+          description: Indica el numero de likes que tiene una reseña
+      example:
+        id: 1
+        rate: 4.3
+        comment: Me ha encantadoa el concierto
+        registerDate: 2025-02-04
+        visible: true
+        likes: 23
+        recommend: true
+    ReviewOutDto:
+      type: object
+      properties:
+        id:
+          type: number
+          format: int64
+          description: identificador de la reseña
+        rate:
+          type: float
+          description: Puntuación de la reseña
+        comment:
+          type: string
+          description: Comentario de la reseña
+        registerDate:
+          type: string
+          format: date
+          description: Fecha en la que se registra la reseña
+        recommend:
+          type: boolean
+          description: Devuelve si el usuario recomienda o no el evento.
+        likes:
+          type: number
+          format: double
+          description: Indica el numero de likes que tiene una reseña
+      example:
+        id: 1
+        rate: 4.3
+        comment: Me ha encantadoa el concierto
+        registerDate: 2025-02-04
+        recommend: true
+        likes: 23
     ErrorResponse:
       type: object
       properties:
