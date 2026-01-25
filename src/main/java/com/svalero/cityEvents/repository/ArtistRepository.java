@@ -11,5 +11,5 @@ public interface ArtistRepository extends CrudRepository<Artist, Long> {
     List<Artist> findAll();
     List<Artist> findByType(String type);
     List<Artist> findByActiveTrue();
-
+    List<Artist> findAllByOrderByFollowersDesc();
 }
