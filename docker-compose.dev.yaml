@@ -1,0 +1,14 @@
+name: cityEvents
+services:
+  db:
+    image: mariadb:11.3.2
+    container_name: cityEvents-db
+    environment:
+      MARIADB_DATABASE: cityEvents_database
+      MARIADB_USER: cityEvents_user
+      MARIADB_PASSWORD: cityEvents_password
+      MARIADB_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3307:3306"
+    volumes:
+      - C:\Users\Hermes\Desktop\DAM\2º\Acceso a Datos\mariadb_cityevents:/var/lib/mysql

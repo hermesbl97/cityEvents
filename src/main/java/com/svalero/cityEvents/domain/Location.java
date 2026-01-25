@@ -38,6 +38,10 @@ public class Location {
     private LocalDate registerDate;
     @Column(name = "disabled_access")
     private boolean disabledAccess;
+//    @Column
+//    private double longitude;
+//    @Column
+//    private double latitude;
 
     @OneToMany(mappedBy = "location", cascade = CascadeType.REMOVE)
     @JsonBackReference

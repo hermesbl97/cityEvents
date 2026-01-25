@@ -1,6 +1,7 @@
 package com.svalero.cityEvents.domain;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotNull;
@@ -24,7 +25,8 @@ public class Event {
     private String name;
     @Column
     private String description;
-    @Column(name = "event_name")
+    @Column(name = "event_date")
+//    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate eventDate;
     @Column
     private String category;
