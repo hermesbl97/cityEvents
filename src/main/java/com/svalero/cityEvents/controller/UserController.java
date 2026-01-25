@@ -27,7 +27,7 @@ public class UserController {
     @GetMapping("/usuarios")
     public ResponseEntity<List<User>> getAllUsers (
             @RequestParam(value = "name", required = false) String name,
-            @RequestParam(value = "date", required = false)LocalDate date) throws UserNotFoundException {
+            @RequestParam(value = "date", required = false) LocalDate date) throws UserNotFoundException {
 
         List<User> allUsers;
 

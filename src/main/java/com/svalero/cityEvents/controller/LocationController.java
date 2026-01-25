@@ -34,7 +34,8 @@ public class LocationController {
     @GetMapping("/locations")
     public ResponseEntity<List<LocationOutDto>> getALL(
             @RequestParam(value = "category", required = false) String category,
-            @RequestParam(value = "disabledAccess", required = false) Boolean disabledAccess) { //indicamos que queremos que filtre por category la busqueda con el Request param
+            @RequestParam(value = "disabledAccess", required = false) Boolean disabledAccess,
+            @RequestParam(value = "postalCode", required = false) Integer postalCode) { //indicamos que queremos que filtre por category la busqueda con el Request param
 
         List<Location> allLocations;
 
@@ -42,6 +43,8 @@ public class LocationController {
             allLocations = locationService.findByCategory(category);
         } else if (disabledAccess != null && disabledAccess){
             allLocations = locationService.findByDisabledAccessLocation();
+        } else if (postalCode != null) {
+            allLocations = locationService.findByPostalCode(postalCode);
         } else {
             allLocations = locationService.findAll();
         }
