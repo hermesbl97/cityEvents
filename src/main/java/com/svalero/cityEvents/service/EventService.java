@@ -50,6 +50,10 @@ public class EventService {
         return eventRepository.findByLocation_Name(locationName);
     }
 
+    public List<Event> findByPrice(float price) {
+        return eventRepository.findByPriceLessThanEqualOrderByPriceAsc(price);
+    }
+
     public Event findById(long id) throws EventNotFoundException {
         Event event = eventRepository.findById(id)
                 .orElseThrow(EventNotFoundException::new);

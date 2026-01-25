@@ -26,7 +26,7 @@ public class ArtistController {
     private ModelMapper modelMapper;
 
     @GetMapping("/artists")
-    public ResponseEntity<List<Artist>> getAll(
+    public ResponseEntity<List<Artist>> getAll (
             @RequestParam(value = "type", required = false) String type,
             @RequestParam(value = "active", required = false) Boolean active) {
 
