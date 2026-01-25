@@ -11,4 +11,5 @@ public interface LocationRepository extends CrudRepository<Location, Long> {
     List<Location> findAll(); //con esto declaramos que nos haga un select * from Location
     List<Location> findByCategory(String category);
     List<Location> findByDisabledAccessTrue();
+    List<Location> findByPostalCode(int postalCode);
 }

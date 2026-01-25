@@ -39,6 +39,11 @@ public class ArtistService {
         return artistRepository.findByActiveTrue();
     }
 
+    public List<Artist> findByFollowers() {
+        List<Artist> artists = artistRepository.findAllByOrderByFollowersDesc();
+        return artists;
+    }
+
     public Artist findArtistById(long id) throws ArtistNotFoundException {
         Artist artist = artistRepository.findById(id)
                 .orElseThrow(ArtistNotFoundException::new);

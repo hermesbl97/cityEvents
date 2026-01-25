@@ -26,9 +26,10 @@ public class ArtistController {
     private ModelMapper modelMapper;
 
     @GetMapping("/artists")
-    public ResponseEntity<List<Artist>> getAll(
+    public ResponseEntity<List<Artist>> getAll (
             @RequestParam(value = "type", required = false) String type,
-            @RequestParam(value = "active", required = false) Boolean active) {
+            @RequestParam(value = "active", required = false) Boolean active,
+            @RequestParam(value = "orderByFollowers", required = false) Boolean orderByFollowers) {
 
         List<Artist> allArtists;
 
@@ -36,6 +37,8 @@ public class ArtistController {
             allArtists = artistService.findByType(type);
         } else if (active != null && active) {
             allArtists = artistService.findByArtistActiveTrue();
+        } else if (orderByFollowers != null && orderByFollowers) {
+            allArtists = artistService.findByFollowers();
         } else {
             allArtists = artistService.findAll();
         }

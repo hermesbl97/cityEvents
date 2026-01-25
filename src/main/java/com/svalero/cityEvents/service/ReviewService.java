@@ -51,6 +51,11 @@ public class ReviewService {
         return reviewRepository.findByEvent_Name(eventName);
     }
 
+    public List<Review> findByRate(float rate) {
+        List<Review> reviews = reviewRepository.findByRateGreaterThan(rate);
+        return reviews;
+    }
+
     public Review getReviewById(long id) throws ReviewNotFoundException {
         Review review = reviewRepository.findById(id)
                 .orElseThrow(ReviewNotFoundException::new);

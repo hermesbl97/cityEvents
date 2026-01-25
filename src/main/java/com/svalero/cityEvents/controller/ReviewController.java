@@ -45,7 +45,8 @@ public class ReviewController {
     @GetMapping("/reviews")
     public ResponseEntity<List<ReviewOutDto>> getAll(
             @RequestParam(value = "username", required = false) String username,
-            @RequestParam(value = "eventName", required = false) String eventName) {
+            @RequestParam(value = "eventName", required = false) String eventName,
+            @RequestParam(value = "rate", required = false) Float rate) {
 
         List<Review> allReviews;
 
@@ -53,6 +54,8 @@ public class ReviewController {
          allReviews = reviewService.findByUsername(username);
         } else if (eventName != null && !eventName.isEmpty()) {
             allReviews = reviewService.findByEventName(eventName);
+        } else if (rate != null) {
+            allReviews = reviewService.findByRate(rate);
         } else {
             allReviews = reviewService.findAll();
         }

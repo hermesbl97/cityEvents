@@ -43,7 +43,6 @@ public class UserService {
         return user;
     }
 
-
     public List<User> findUserByName(String name) {
         List<User> users = userRepository.findUserByName(name);
         return users;
@@ -51,6 +50,10 @@ public class UserService {
 
     public List<User> findUserBornBefore(LocalDate date) {
         return userRepository.findByBirthDateBefore(date);
+    }
+
+    public List<User> findUserNotActive() {
+        return userRepository.findByActiveFalse();
     }
 
     public User modify(long id, User user) throws UserNotFoundException {

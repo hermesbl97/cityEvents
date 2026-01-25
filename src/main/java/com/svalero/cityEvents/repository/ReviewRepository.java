@@ -12,4 +12,5 @@ public interface ReviewRepository extends CrudRepository<Review, Long> {
     List<Review> findAll();
     List<Review> findByUserUsername(String username);
     List<Review> findByEvent_Name(String eventName);
+    List<Review> findByRateGreaterThan(float rate);
 }

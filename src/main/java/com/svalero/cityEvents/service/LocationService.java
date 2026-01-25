@@ -44,6 +44,11 @@ public class LocationService {
         return locations;
     }
 
+    public List<Location> findByPostalCode(int postalCode) {
+        List<Location> locations = locationRepository.findByPostalCode(postalCode);
+        return locations;
+    }
+
     public Location findById(long id) throws  LocationNotFoundException {
         Location location = locationRepository.findById(id)
                 .orElseThrow(LocationNotFoundException::new);

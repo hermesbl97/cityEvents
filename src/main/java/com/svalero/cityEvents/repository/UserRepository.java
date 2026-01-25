@@ -12,4 +12,5 @@ public interface UserRepository extends CrudRepository<User, Long> {
     List<User> findAll();
     List<User> findUserByName(String name);
     List<User> findByBirthDateBefore(LocalDate date);
+    List<User> findByActiveFalse();
 }
