@@ -1,9 +1,12 @@
 package com.svalero.cityEvents.service;
 
 import com.svalero.cityEvents.domain.Artist;
+import com.svalero.cityEvents.dto.ArtistOutDto;
+import com.svalero.cityEvents.dto.EventOutDto;
 import com.svalero.cityEvents.exception.ArtistNotFoundException;
 import com.svalero.cityEvents.repository.ArtistRepository;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.TypeToken;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -27,7 +30,7 @@ public class ArtistService {
         artistRepository.delete(artist);
     }
 
-    public List<Artist> findAll(String type, Boolean active, Boolean orderByFollowers) {
+    public List<ArtistOutDto> findAll(String type, Boolean active, Boolean orderByFollowers) {
 
         List<Artist> allArtists;
 
@@ -41,7 +44,7 @@ public class ArtistService {
             allArtists = artistRepository.findAll();
         }
 
-        return allArtists;
+        return modelMapper.map(allArtists, new TypeToken<List<ArtistOutDto>>() {}.getType());
     }
 
     public List<Artist> findByType(String type) {
