@@ -55,19 +55,6 @@ public class EventService {
         return modelMapper.map(allEvents, new TypeToken<List<EventOutDto>>() {}.getType());
     }
 
-    public List<Event> findByCategory(String category) {
-        List<Event> events = eventRepository.findByCategory(category);
-        return events;
-    }
-
-    public List<Event> findByLocationName(String locationName) {
-        return eventRepository.findByLocation_Name(locationName);
-    }
-
-    public List<Event> findByPrice(float price) {
-        return eventRepository.findByPriceLessThanEqualOrderByPriceAsc(price);
-    }
-
     public Event findById(long id) throws EventNotFoundException {
         Event event = eventRepository.findById(id)
                 .orElseThrow(EventNotFoundException::new);

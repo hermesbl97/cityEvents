@@ -47,19 +47,6 @@ public class ArtistService {
         return modelMapper.map(allArtists, new TypeToken<List<ArtistOutDto>>() {}.getType());
     }
 
-    public List<Artist> findByType(String type) {
-        return artistRepository.findByType(type);
-    }
-
-    public List<Artist> findByArtistActiveTrue() {
-        return artistRepository.findByActiveTrue();
-    }
-
-    public List<Artist> findByFollowers() {
-        List<Artist> artists = artistRepository.findAllByOrderByFollowersDesc();
-        return artists;
-    }
-
     public Artist findArtistById(long id) throws ArtistNotFoundException {
         Artist artist = artistRepository.findById(id)
                 .orElseThrow(ArtistNotFoundException::new);

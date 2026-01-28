@@ -26,7 +26,7 @@ public class Event {
     @Column
     private String description;
     @Column(name = "event_date")
-//    @JsonFormat(pattern = "yyyy-MM-dd")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate eventDate;
     @Column
     private String category;

@@ -126,7 +126,7 @@ public class UserServiceTests {
         when(userRepository.findByActiveFalse()).thenReturn(mockUserList);
         when(modelMapper.map(mockUserList, new TypeToken<List<UserOutDto>>() {}.getType())).thenReturn(mockUserOutDto);
 
-        List<UserOutDto> actualUserList = userService.findAll("",null,false);
+        List<UserOutDto> actualUserList = userService.findAll("",null,true);
         assertEquals(1, actualUserList.size());
         assertEquals("sofiladf", actualUserList.getLast().getUsername());
 

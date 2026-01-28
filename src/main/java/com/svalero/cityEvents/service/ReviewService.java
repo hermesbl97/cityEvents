@@ -57,20 +57,6 @@ public class ReviewService {
         return reviewsOutDto;
     }
 
-    public List<Review> findByUsername(String username) {
-        List<Review> reviews = reviewRepository.findByUserUsername(username);
-        return reviews;
-    }
-
-    public List<Review> findByEventName(String eventName) {
-        return reviewRepository.findByEvent_Name(eventName);
-    }
-
-    public List<Review> findByRate(float rate) {
-        List<Review> reviews = reviewRepository.findByRateGreaterThan(rate);
-        return reviews;
-    }
-
     public Review getReviewById(long id) throws ReviewNotFoundException {
         Review review = reviewRepository.findById(id)
                 .orElseThrow(ReviewNotFoundException::new);

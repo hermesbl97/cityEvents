@@ -21,6 +21,7 @@ import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -58,8 +59,10 @@ public class EventController {
     public ResponseEntity<Event> addEvent(@Valid @RequestBody EventInDto eventInDto) throws LocationNotFoundException {
         //Buscamos la localización
         Location location = locationService.findById(eventInDto.getLocationId());
+//        Location location = locationService.findById(1);
 
         //Buscamos los artistas
+//        List<Artist> artists = artistService.findAllArtistsById(new ArrayList<>(List.of(1L)));
         List<Artist> artists = artistService.findAllArtistsById(eventInDto.getArtistsIds());
 
         Event newEvent = eventService.add(location, eventInDto, artists);

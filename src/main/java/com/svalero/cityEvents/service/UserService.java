@@ -43,7 +43,7 @@ public class UserService {
             allUsers = userRepository.findUserByName(name);
         } else if (date != null){
             allUsers = userRepository.findByBirthDateBefore(date);
-        } else if (active != null && !active) {
+        } else if (active != null && active==true) {
             allUsers = userRepository.findByActiveFalse();
         } else {
             allUsers = userRepository.findAll();
@@ -58,19 +58,6 @@ public class UserService {
         User user = userRepository.findById(id)
                 .orElseThrow(UserNotFoundException::new);
         return user;
-    }
-
-    public List<User> findUserByName(String name) {
-        List<User> users = userRepository.findUserByName(name);
-        return users;
-    }
-
-    public List<User> findUserBornBefore(LocalDate date) {
-        return userRepository.findByBirthDateBefore(date);
-    }
-
-    public List<User> findUserNotActive() {
-        return userRepository.findByActiveFalse();
     }
 
     public User modify(long id, User user) throws UserNotFoundException {
