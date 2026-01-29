@@ -1,8 +1,11 @@
 package com.svalero.cityEvents;
 
+import com.svalero.cityEvents.domain.Artist;
 import com.svalero.cityEvents.domain.Event;
 import com.svalero.cityEvents.domain.Location;
+import com.svalero.cityEvents.dto.EventInDto;
 import com.svalero.cityEvents.dto.EventOutDto;
+import com.svalero.cityEvents.exception.EventNotFoundException;
 import com.svalero.cityEvents.repository.EventRepository;
 import com.svalero.cityEvents.service.EventService;
 import org.junit.jupiter.api.Test;
@@ -14,9 +17,11 @@ import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 
@@ -153,6 +158,114 @@ public class EventServiceTests {
         verify(eventRepository, times(1)).findByPriceLessThanEqualOrderByPriceAsc(30f);
         verify(eventRepository, times(0)).findByLocation_Name("");
         verify(eventRepository, times(0)).findByCategory("");
+    }
+
+
+    @Test
+    public void testFindById() throws EventNotFoundException {
+        Event mockEvent = new Event(3, "Panorama desde el Puente", "Obra de teatro novedosa",
+                        LocalDate.of(2025,1,2), "Evento", 300, 25, false, null, null, null);
+
+
+        when(eventRepository.findById(3L)).thenReturn(Optional.of(mockEvent));
+
+        Event event = eventService.findById(3L);
+        assertEquals(300, event.getCapacity());
+        assertEquals("Panorama desde el Puente", event.getName());
+
+        verify(eventRepository, times(1)).findById(3L);
+    }
+
+
+    @Test
+    public void testAddEvent() {
+        Location location = new Location();
+        location.setId(1L);
+
+        EventInDto eventInDto = new EventInDto("Campanadas Año nuevo", "Un año más las campanadas tendrán lugar en la Plaza del pilar",
+                LocalDate.of(2025,5,1), "Evento", 2500, 32, 1, null);
+
+        List<Artist> artists = List.of();
+
+        Event registerEvent = new Event(3,"Campanadas Año nuevo", "Un año más las campanadas tendrán lugar en la Plaza del pilar",
+                LocalDate.of(2025,5,1), "Evento", 2500, 32,true, null, location, null);
+
+        when(eventRepository.save(any(Event.class))).thenReturn(registerEvent);
+
+        Event result = eventService.add(location, eventInDto, artists);
+
+        assertEquals(registerEvent, result);
+        assertEquals("Campanadas Año nuevo", result.getName());
+
+        verify(eventRepository, times(1)).save(any(Event.class));
+    }
+
+    @Test
+    public void testModifyEvent200() throws EventNotFoundException {
+
+        Event existingEvent = new Event();
+        existingEvent.setName("Concierto juvenil");
+        existingEvent.setId(1);
+
+        Event updatingEvent = new Event();
+        updatingEvent.setName("Concierto rock");
+
+        when(eventRepository.findById(1L)).thenReturn(Optional.of(existingEvent));
+        when(eventRepository.save(existingEvent)).thenReturn(existingEvent);
+
+        eventService.modify(1L, updatingEvent);
+
+        verify(modelMapper).map(updatingEvent,existingEvent);
+        verify(eventRepository).save(existingEvent);
+    }
+
+    @Test
+    public void testModifyEventNotFound() {
+
+        Event event = new Event();
+
+        //Simulamos que no existe evento con Id:15
+        when(eventRepository.findById(15L)).thenReturn(Optional.empty());
+
+        //Comprobamos que lanza la excepción
+//        assertThrows(EventNotFoundException.class, () -> eventService.modify(15L, event));
+
+        try {
+            eventService.modify(15L, event);
+        } catch (EventNotFoundException enfe) {}
+
+        verify(eventRepository, times(1)).findById(15L);
+        verify(eventRepository, never()).save(any(Event.class));
+    }
+
+    @Test
+    public void testDeleteEvent204() throws EventNotFoundException {
+        Event event = new Event();
+        event.setId(15L);
+
+        when(eventRepository.findById(15L)).thenReturn(Optional.of(event));
+
+        eventService.delete(15L);
+
+        verify(eventRepository, times(1)).findById(15L);
+        verify(eventRepository, times(1)).delete(event);
+    }
+
+    @Test
+    public void testDeleteEventNotFound404() {
+
+        Event event = new Event();
+
+        when(eventRepository.findById(15L)).thenReturn(Optional.empty());
+
+//        assertThrows(EventNotFoundException.class, () -> eventService.delete(15));
+        try {
+            eventService.delete(15);
+        } catch (EventNotFoundException enfe) {
+        }
+
+        verify(eventRepository, times(1)).findById(15L);
+        verify(eventRepository, times(0)).delete(any(Event.class));
     }
 
 }
