@@ -70,15 +70,15 @@ public class UserServiceTests {
                 new UserOutDto(3, "mondi", "Díez", LocalDate.of(2003,4,8))
         );
 
-        when(userRepository.findUserByName("mondi")).thenReturn(mockUserList);
+        when(userRepository.findUserByName("Mónica")).thenReturn(mockUserList);
         when(modelMapper.map(mockUserList, new TypeToken<List<UserOutDto>>() {}.getType())).thenReturn(mockUserOutDto);
 
-        List<UserOutDto> actualEventList = userService.findAll("mondi",null,null);
+        List<UserOutDto> actualEventList = userService.findAll("Mónica",null,null);
         assertEquals(1, actualEventList.size());
         assertEquals("mondi", actualEventList.getLast().getUsername());
 
         verify(userRepository, times(0)).findAll();
-        verify(userRepository, times(1)).findUserByName("mondi");
+        verify(userRepository, times(1)).findUserByName("Mónica");
         verify(userRepository, times(0)).findByBirthDateBefore(null);
         verify(userRepository, times(0)).findByActiveFalse();
     }
