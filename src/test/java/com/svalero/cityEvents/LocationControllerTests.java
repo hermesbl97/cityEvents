@@ -138,7 +138,7 @@ public class LocationControllerTests {
     @Test
     public void testGetLocationById() throws Exception {
         Location location = new Location(3, "Teatro Principal", "Teatro histórico de la ciudad", "Teatro",
-                "Independencia", 50001, LocalDate.of(2024,5,3), false, null);
+                "Independencia", 50001, LocalDate.of(2024,5,3), false, 36, 98, null);
 
         when(locationService.findById(3L)).thenReturn(location);
 
@@ -170,7 +170,7 @@ public class LocationControllerTests {
     public void testAddLocation() throws Exception {
 
         Location location = new Location(2, "Basília del Pilar", "Edificio cristiano. Elemento más representativo de la ciudad",
-                "Monumento", "Plaza del Pilar", 50001, LocalDate.of(2026,10,2), true, null);
+                "Monumento", "Plaza del Pilar", 50001, LocalDate.of(2026,10,2), true, 15, 24, null);
 
         Location newLocation = new Location();
 

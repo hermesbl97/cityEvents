@@ -147,7 +147,7 @@ public class EventControllerTests {
     public void testAddEvent() throws Exception {
 
         Location location = new Location(1,"La Romareda", "Estadio de fútbol", "Estadio", "Isabel la Católica",
-                50009, LocalDate.of(2025,2,1), true, null);
+                50009, LocalDate.of(2025,2,1), true, 65, 33, null);
 
         List<Artist> artists = List.of(
                 new Artist(1,"Jesús", "García", "Masculino", LocalDate.of(1999,3,2), "Cantante",
