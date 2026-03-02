@@ -35,11 +35,11 @@ public class LocationServiceTests {
 
         List<Location> mockLocationList = List.of(
             new Location(1,"La Romareda", "Estadio de fútbol", "Estadio", "Isabel la Católica",
-                  50009, LocalDate.of(2025,2,1), true, null),
+                  50009, LocalDate.of(2025,2,1), true, 61, -25, null),
             new Location(2, "Basília del Pilar", "Edificio cristiano. Elemento más representativo de la ciudad",
-                    "Monumento", "Plaza del Pilar", 50001, LocalDate.of(2026,10,2), true, null),
+                    "Monumento", "Plaza del Pilar", 50001, LocalDate.of(2026,10,2), true, 25, -84, null),
             new Location(3, "Teatro Principal", "Teatro histórico de la ciudad", "Teatro",
-                    "Independencia", 50002, LocalDate.of(2024,5,3), false, null)
+                    "Independencia", 50002, LocalDate.of(2024,5,3), false, 43, 26, null)
         );
 
         List<LocationOutDto> mockLocationOutDto = List.of(
@@ -67,11 +67,11 @@ public class LocationServiceTests {
 
         List<Location> mockLocationList = List.of(
                 new Location(1,"La Romareda", "Estadio de fútbol", "Estadio", "Isabel la Católica",
-                        50009, LocalDate.of(2025,2,1), true, null),
+                        50009, LocalDate.of(2025,2,1), true, 61, -25, null),
                 new Location(2, "Basília del Pilar", "Edificio cristiano. Elemento más representativo de la ciudad",
-                        "Monumento", "Plaza del Pilar", 50001, LocalDate.of(2026,10,2), true, null),
+                        "Monumento", "Plaza del Pilar", 50001, LocalDate.of(2026,10,2), true, 25, -84, null),
                 new Location(3, "Teatro Principal", "Teatro histórico de la ciudad", "Teatro",
-                        "Independencia", 50002, LocalDate.of(2024,5,3), false, null)
+                        "Independencia", 50002, LocalDate.of(2024,5,3), false, 43, 26, null)
         );
 
         List<LocationOutDto> mockLocationOutDto = List.of(
@@ -97,11 +97,11 @@ public class LocationServiceTests {
 
         List<Location> mockLocationList = List.of(
                 new Location(1,"La Romareda", "Estadio de fútbol", "Estadio", "Isabel la Católica",
-                        50009, LocalDate.of(2025,2,1), true, null),
+                        50009, LocalDate.of(2025,2,1), true, 61, -25, null),
                 new Location(2, "Basília del Pilar", "Edificio cristiano. Elemento más representativo de la ciudad",
-                        "Monumento", "Plaza del Pilar", 50001, LocalDate.of(2026,10,2), true, null),
+                        "Monumento", "Plaza del Pilar", 50001, LocalDate.of(2026,10,2), true, 25, -84, null),
                 new Location(3, "Teatro Principal", "Teatro histórico de la ciudad", "Teatro",
-                        "Independencia", 50001, LocalDate.of(2024,5,3), false, null)
+                        "Independencia", 50002, LocalDate.of(2024,5,3), false, 43, 26, null)
         );
 
         List<LocationOutDto> mockLocationOutDto = List.of(
@@ -128,11 +128,11 @@ public class LocationServiceTests {
 
         List<Location> mockLocationList = List.of(
                 new Location(1,"La Romareda", "Estadio de fútbol", "Estadio", "Isabel la Católica",
-                        50009, LocalDate.of(2025,2,1), true, null),
+                        50009, LocalDate.of(2025,2,1), true, 61, -25, null),
                 new Location(2, "Basília del Pilar", "Edificio cristiano. Elemento más representativo de la ciudad",
-                        "Monumento", "Plaza del Pilar", 50001, LocalDate.of(2026,10,2), true, null),
+                        "Monumento", "Plaza del Pilar", 50001, LocalDate.of(2026,10,2), true, 25, -84, null),
                 new Location(3, "Teatro Principal", "Teatro histórico de la ciudad", "Teatro",
-                        "Independencia", 50001, LocalDate.of(2024,5,3), false, null)
+                        "Independencia", 50002, LocalDate.of(2024,5,3), false, 43, 26, null)
         );
 
         List<LocationOutDto> mockLocationOutDto = List.of(
@@ -157,7 +157,7 @@ public class LocationServiceTests {
     @Test
     public void testFindLocationById() throws LocationNotFoundException {
         Location mockLocation = new Location(15,"La Romareda", "Estadio de fútbol", "Estadio", "Isabel la Católica",
-                50009, LocalDate.of(2025,2,1), true, null);
+                50009, LocalDate.of(2025,2,1), true, 26, 21, null);
 
 
         when(locationRepository.findById(15L)).thenReturn(Optional.of(mockLocation));
@@ -182,7 +182,7 @@ public class LocationServiceTests {
     @Test
     public void testAddLocation() {
         Location registerLocation = new Location(15,"La Romareda", "Estadio de fútbol", "Estadio", "Isabel la Católica",
-                50009, LocalDate.of(2025,2,1), true, null);
+                50009, LocalDate.of(2025,2,1), true, 26, 21, null);
 
         when(locationRepository.save(any(Location.class))).thenReturn(registerLocation);
 

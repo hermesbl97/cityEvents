@@ -67,7 +67,7 @@ public class ArtistServiceTests {
 
         List<Artist> mockArtistList = List.of(
                 new Artist(1,"Jesús", "García", "Masculino", LocalDate.of(1999,3,2), "Cantante",
-                        2523697, 1.77F, true, null),
+                        2523697, 1.77F, true,null),
                 new Artist(2, "María", "Martinez", "Femenino", LocalDate.of(2000,5,17),
                         "Actor", 2645987, 1.68F, false, null),
                 new Artist(3, "Carla", "Gallardo", "Femenino", LocalDate.of(1997,8,6), "Deportista",
@@ -199,7 +199,7 @@ public class ArtistServiceTests {
     @Test
     public void testAddArtist() {
         Artist registerArtist = new Artist(2, "María", "Martinez", "Femenino", LocalDate.of(2000,5,17),
-                "Actor", 2645987, 1.68F, false, null);
+                "Actor", 2645987, 1.68F, false,  null);
 
 
         when(artistRepository.save(any(Artist.class))).thenReturn(registerArtist);
