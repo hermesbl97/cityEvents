@@ -25,6 +25,13 @@ paths:
           required: false
           schema:
             type: string
+        - name: price
+          in: query
+          description: Filtra por precio inferior o igual al parámetro y los ordena ascendentemente
+          required: false
+          schema:
+            type: number
+            format: float
       responses:
         '200':
           description: OK
@@ -164,12 +171,24 @@ paths:
         Nos devuelve una lista completa con todas las localizaciones en las que se celebran eventos.
         Se puede realizar búsqueda tanto de la lista completa como realizar un filtrado tanto por categoría evento como por las localizaciones accesibles para gente con discapacidad.
       parameters:
-        - name: category
+        - name: disabledAccess
           in: query
           description: Filtra por localizaciones que dispongan de acceso para personas con alguna discapacidad.
           required: false
           schema:
             type: boolean
+        - name: category
+          in: query
+          description: Filtra las localizaciones por su categoría
+          required: false
+          schema:
+            type: string
+        - name: postalCode
+          in: query
+          description: Filtra las localizacione por el número de código postal
+          schema:
+            type: number
+            format: int32
       responses:
         '200':
           description: OK
@@ -321,6 +340,12 @@ paths:
           required: false
           schema:
             type: boolean
+        - name: orderByFollowers
+          in: query
+          description: Ordena todos los artistas por orden descendente.
+          required: false
+          schema:
+            type: number
       responses:
         '200':
           description: OK
@@ -472,6 +497,13 @@ paths:
           required: false
           schema:
             type: string
+        - name: rate
+          in: query
+          description: Filtra las reseñas con una valoración superior a la filtrada.
+          required: false
+          schema:
+            type: number
+            format: float
       responses:
         '200':
           description: OK
@@ -623,6 +655,11 @@ paths:
           required: false
           schema:
             type: date
+        - name: active
+          in: query
+          description: Filtra por los usuarios que están activos
+          schema:
+            type: boolean
       responses:
         '200':
           description: OK
@@ -797,7 +834,7 @@ components:
           description: Tipo de evento
         capacity:
           type: number
-          format: double
+          format: int32
           description: Capacidad de aforo del evento
         price:
           type: number
@@ -888,6 +925,12 @@ components:
         disabledAccess:
           type: boolean
           description: Indica si tiene acceso para persona discapacitadas
+        longitude:
+          type: number
+          format: double
+        latitude:
+          type: number
+          format: double
       example:
         name: Teatro Principal
         description: Teatro más importante de la ciudad de Zaragoza.
@@ -896,6 +939,8 @@ components:
         postalCode: 5001
         registerDate: 2026-01-13
         disabledAcces: true
+        longitude: 34.0800397
+        latitude: -0.42698239
     Location:
       allOf:
         - $ref: '#/components/schemas/LocationInDto'
@@ -913,6 +958,8 @@ components:
         postalCode: 5001
         registerDate: 2026-01-13
         disabledAccess: true
+        longitude: 34.0800397
+        latitude: -0.42698239
     Artist:
       allOf:
         - $ref: '#/components/schemas/ArtistInDto'
@@ -953,7 +1000,7 @@ components:
           description: Tipo de artista
         followers:
           type: number
-          format: double
+          format: int32
           description: Número de seguidores que tiene el artista
         height:
           type: number
@@ -975,7 +1022,8 @@ components:
       type: object
       properties:
         rate:
-          type: float
+          type: number
+          format: float
           description: Puntuación de la reseña
         comment:
           type: string
@@ -1007,7 +1055,7 @@ components:
           description: Indica si la reseña es visible para los usuarios.
         likes:
           type: number
-          format: double
+          format: int32
           description: Indica el numero de likes que tiene una reseña
       example:
         id: 1
@@ -1025,7 +1073,8 @@ components:
           format: int64
           description: identificador de la reseña
         rate:
-          type: float
+          type: number
+          format: float
           description: Puntuación de la reseña
         comment:
           type: string
@@ -1039,7 +1088,7 @@ components:
           description: Devuelve si el usuario recomienda o no el evento.
         likes:
           type: number
-          format: double
+          format: int32
           description: Indica el numero de likes que tiene una reseña
       example:
         id: 1
