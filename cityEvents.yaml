@@ -636,7 +636,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalServerError'
-  /users:
+  /usuarios:
     get:
       summary: Lista de usuarios
       description: |
@@ -703,7 +703,7 @@ paths:
             application/json:
               schema:
                 $ref: '#/components/schemas/InternalServerError'
-  /users/{id}:
+  /usuarios/{id}:
     get:
       summary: Vista de un usuario
       description: Devuelve la vista mucho más detallada de un usuario en concreto. Búsqueda filtrada por Id
@@ -735,7 +735,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/InternalServerError'
     put:
-      summary: Editar un user
+      summary: Editar un usuario
       description: Nos permite modificar, por "Id", los datos de un usuario en nuestra base de datos.
       requestBody:
         description: Los datos del nuevo usuario. Son los que sobreescribiremos sobre el antiguo.
