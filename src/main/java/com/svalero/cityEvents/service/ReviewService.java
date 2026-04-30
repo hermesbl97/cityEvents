@@ -5,6 +5,7 @@ import com.svalero.cityEvents.domain.Location;
 import com.svalero.cityEvents.domain.Review;
 import com.svalero.cityEvents.domain.User;
 import com.svalero.cityEvents.dto.ReviewInDto;
+import com.svalero.cityEvents.dto.ReviewModifyInDto;
 import com.svalero.cityEvents.dto.ReviewOutDto;
 import com.svalero.cityEvents.exception.ReviewNotFoundException;
 import com.svalero.cityEvents.repository.ReviewRepository;
@@ -64,12 +65,14 @@ public class ReviewService {
         return review;
     }
 
-    public Review modify(long id,Review review) throws ReviewNotFoundException {
+    public Review modify(long id, ReviewModifyInDto reviewInDto, Event event, User user) throws ReviewNotFoundException {
         Review existingReview = reviewRepository.findById(id)
                 .orElseThrow(ReviewNotFoundException::new);
 
-        modelMapper.map(review,existingReview);
+        modelMapper.map(reviewInDto,existingReview);
         existingReview.setId(id);
+        existingReview.setUser(user);
+        existingReview.setEvent(event);
 
         return reviewRepository.save(existingReview);
     }

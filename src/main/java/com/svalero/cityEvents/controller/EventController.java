@@ -4,6 +4,7 @@ import com.svalero.cityEvents.domain.Artist;
 import com.svalero.cityEvents.domain.Event;
 import com.svalero.cityEvents.domain.Location;
 import com.svalero.cityEvents.dto.EventInDto;
+import com.svalero.cityEvents.dto.EventModifyInDto;
 import com.svalero.cityEvents.dto.EventOutDto;
 import com.svalero.cityEvents.exception.ErrorResponse;
 import com.svalero.cityEvents.exception.EventNotFoundException;
@@ -71,8 +72,13 @@ public class EventController {
     }
 
     @PutMapping("/events/{id}")
-    public ResponseEntity<Event> modifyEvent(@PathVariable long id, @RequestBody Event event) throws EventNotFoundException {
-        Event newEvent = eventService.modify(id,event);
+    public ResponseEntity<Event> modifyEvent(@PathVariable long id, @RequestBody EventModifyInDto eventModifyInDto)
+            throws EventNotFoundException, LocationNotFoundException {
+
+        Location location = locationService.findById(eventModifyInDto.getLocationId());
+        List<Artist> artists = artistService.findAllArtistsById(eventModifyInDto.getArtistsIds());
+
+        Event newEvent = eventService.modify(id,eventModifyInDto, location, artists);
         return ResponseEntity.ok(newEvent);
     }
 

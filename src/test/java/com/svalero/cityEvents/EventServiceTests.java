@@ -4,6 +4,7 @@ import com.svalero.cityEvents.domain.Artist;
 import com.svalero.cityEvents.domain.Event;
 import com.svalero.cityEvents.domain.Location;
 import com.svalero.cityEvents.dto.EventInDto;
+import com.svalero.cityEvents.dto.EventModifyInDto;
 import com.svalero.cityEvents.dto.EventOutDto;
 import com.svalero.cityEvents.exception.EventNotFoundException;
 import com.svalero.cityEvents.repository.EventRepository;
@@ -214,17 +215,20 @@ public class EventServiceTests {
     @Test
     public void testModifyEvent() throws EventNotFoundException {
 
+        Location location = new Location();
+        List<Artist> artists = new ArrayList<>();
+
         Event existingEvent = new Event();
         existingEvent.setName("Concierto juvenil");
         existingEvent.setId(1);
 
-        Event updatingEvent = new Event();
+        EventModifyInDto updatingEvent = new EventModifyInDto();
         updatingEvent.setName("Concierto rock");
 
         when(eventRepository.findById(1L)).thenReturn(Optional.of(existingEvent));
         when(eventRepository.save(existingEvent)).thenReturn(existingEvent);
 
-        eventService.modify(1L, updatingEvent);
+        eventService.modify(1L, updatingEvent,location, artists);
 
         verify(modelMapper).map(updatingEvent,existingEvent);
         verify(eventRepository).save(existingEvent);
@@ -234,6 +238,10 @@ public class EventServiceTests {
     public void testModifyEventNotFound() {
 
         Event event = new Event();
+        EventModifyInDto eventModifyInDto = new EventModifyInDto();
+
+        Location location = new Location();
+        List<Artist> artists = new ArrayList<>();
 
         //Simulamos que no existe evento con Id:15
         when(eventRepository.findById(15L)).thenReturn(Optional.empty());
@@ -242,7 +250,7 @@ public class EventServiceTests {
 //        assertThrows(EventNotFoundException.class, () -> eventService.modify(15L, event));
 
         try {
-            eventService.modify(15L, event);
+            eventService.modify(15L, eventModifyInDto, location, artists);
         } catch (EventNotFoundException enfe) {}
 
         verify(eventRepository, times(1)).findById(15L);

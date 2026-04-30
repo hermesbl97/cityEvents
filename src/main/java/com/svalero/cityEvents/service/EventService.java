@@ -4,6 +4,7 @@ import com.svalero.cityEvents.domain.Artist;
 import com.svalero.cityEvents.domain.Event;
 import com.svalero.cityEvents.domain.Location;
 import com.svalero.cityEvents.dto.EventInDto;
+import com.svalero.cityEvents.dto.EventModifyInDto;
 import com.svalero.cityEvents.dto.EventOutDto;
 import com.svalero.cityEvents.exception.EventNotFoundException;
 import com.svalero.cityEvents.repository.EventRepository;
@@ -62,12 +63,14 @@ public class EventService {
         return event;
     }
 
-    public Event modify(long id, Event event) throws EventNotFoundException {
+    public Event modify(long id, EventModifyInDto eventInDto, Location location, List<Artist> artists) throws EventNotFoundException {
         Event eventExisting = eventRepository.findById(id)
                 .orElseThrow(EventNotFoundException::new);
 
-        modelMapper.map(event, eventExisting);
+        modelMapper.map(eventInDto, eventExisting);
         eventExisting.setId(id);
+        eventExisting.setArtists(artists);
+        eventExisting.setLocation(location);
 
         return eventRepository.save(eventExisting);
     }
