@@ -1,10 +1,7 @@
 package com.svalero.cityEvents;
 
 import com.svalero.cityEvents.domain.*;
-import com.svalero.cityEvents.dto.EventInDto;
-import com.svalero.cityEvents.dto.EventOutDto;
-import com.svalero.cityEvents.dto.ReviewInDto;
-import com.svalero.cityEvents.dto.ReviewOutDto;
+import com.svalero.cityEvents.dto.*;
 import com.svalero.cityEvents.exception.EventNotFoundException;
 import com.svalero.cityEvents.exception.ReviewNotFoundException;
 import com.svalero.cityEvents.repository.ReviewRepository;
@@ -215,17 +212,20 @@ public class ReviewServiceTests {
     @Test
     public void testModifyReview() throws ReviewNotFoundException {
 
+        Event event = new Event();
+        User user = new User();
+
         Review existingReview = new Review();
         existingReview.setRate(4.1f);
         existingReview.setId(45);
 
-        Review updatingReview = new Review();
+        ReviewModifyInDto updatingReview = new ReviewModifyInDto();
         updatingReview.setRate(3.5f);
 
         when(reviewRepository.findById(45L)).thenReturn(Optional.of(existingReview));
         when(reviewRepository.save(existingReview)).thenReturn(existingReview);
 
-        reviewService.modify(45L, updatingReview);
+        reviewService.modify(45L, updatingReview, event, user);
 
         verify(modelMapper).map(updatingReview,existingReview);
         verify(reviewRepository).save(existingReview);
@@ -234,11 +234,14 @@ public class ReviewServiceTests {
     @Test
     public void testModifyReviewNotFound() {
 
-        Review review = new Review();
+        Event event = new Event();
+        User user = new User();
+
+        ReviewModifyInDto review = new ReviewModifyInDto();
 
         when(reviewRepository.findById(15L)).thenReturn(Optional.empty());
 
-        assertThrows(ReviewNotFoundException.class, () -> reviewService.modify(15L, review));
+        assertThrows(ReviewNotFoundException.class, () -> reviewService.modify(15L, review, event, user));
 
         verify(reviewRepository, times(1)).findById(15L);
         verify(reviewRepository, never()).save(any(Review.class));

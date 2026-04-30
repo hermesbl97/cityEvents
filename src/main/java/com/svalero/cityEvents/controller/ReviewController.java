@@ -4,9 +4,7 @@ import com.svalero.cityEvents.domain.Event;
 import com.svalero.cityEvents.domain.Location;
 import com.svalero.cityEvents.domain.Review;
 import com.svalero.cityEvents.domain.User;
-import com.svalero.cityEvents.dto.EventOutDto;
-import com.svalero.cityEvents.dto.ReviewInDto;
-import com.svalero.cityEvents.dto.ReviewOutDto;
+import com.svalero.cityEvents.dto.*;
 import com.svalero.cityEvents.exception.*;
 import com.svalero.cityEvents.service.EventService;
 import com.svalero.cityEvents.service.LocationService;
@@ -70,8 +68,13 @@ public class ReviewController {
     }
 
     @PutMapping("/reviews/{id}")
-    public ResponseEntity<Review> modifyReview(@PathVariable long id, @RequestBody Review review) throws ReviewNotFoundException {
-        Review newReview = reviewService.modify(id, review);
+    public ResponseEntity<Review> modifyReview(@PathVariable long id, @RequestBody ReviewModifyInDto reviewModifyInDto)
+            throws ReviewNotFoundException, EventNotFoundException, UserNotFoundException {
+
+        Event event = eventService.findById(reviewModifyInDto.getEventId());
+        User user = userService.findUserById(reviewModifyInDto.getUserId());
+
+        Review newReview = reviewService.modify(id, reviewModifyInDto, event, user);
         return ResponseEntity.ok(newReview);
     }
 
