@@ -255,7 +255,7 @@ public class EventControllerTests {
 
         Event eventResponse = new Event();
         eventResponse.setId(1L);
-        eventRequest.setName("Evento actualizado");
+        eventResponse.setName("Evento actualizado");
 
         when(locationService.findById(1L)).thenReturn(location);
         when(artistService.findAllArtistsById(anyList())).thenReturn(artists);
