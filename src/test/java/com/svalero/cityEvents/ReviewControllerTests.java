@@ -271,6 +271,8 @@ public class ReviewControllerTests {
         reviewResponse.setId(15L);
         reviewResponse.setRate(4.0f);
 
+        when(eventService.findById(anyLong())).thenReturn(new Event());
+        when(userService.findUserById(anyLong())).thenReturn(new User());
         when(reviewService.modify(eq(15L), any(ReviewModifyInDto.class), any(Event.class), any(User.class)))
                 .thenReturn(reviewResponse);
 
@@ -295,6 +297,8 @@ public class ReviewControllerTests {
         reviewRequest.setUserId(1L);
         reviewRequest.setEventId(2L);
 
+        when(eventService.findById(anyLong())).thenReturn(new Event());
+        when(userService.findUserById(anyLong())).thenReturn(new User());
         when(reviewService.modify(eq(15L), any(ReviewModifyInDto.class), any(Event.class), any(User.class)))
                 .thenThrow(new ReviewNotFoundException());
 

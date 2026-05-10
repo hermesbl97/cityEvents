@@ -60,10 +60,8 @@ public class EventController {
     public ResponseEntity<Event> addEvent(@Valid @RequestBody EventInDto eventInDto) throws LocationNotFoundException {
         //Buscamos la localización
         Location location = locationService.findById(eventInDto.getLocationId());
-//        Location location = locationService.findById(1);
 
         //Buscamos los artistas
-//        List<Artist> artists = artistService.findAllArtistsById(new ArrayList<>(List.of(1L)));
         List<Artist> artists = artistService.findAllArtistsById(eventInDto.getArtistsIds());
 
         Event newEvent = eventService.add(location, eventInDto, artists);
