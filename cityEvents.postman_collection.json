@@ -1,0 +1,1205 @@
+{
+  "info": {
+    "_postman_id": "a2881fd4-f75f-4c76-b24a-fb34a0cc7c62",
+    "name": "cityEvents",
+    "description": "### Welcome to Postman! This is your first collection. \n\nCollections are your starting point for building and testing APIs. You can use this one to:\n\n• Group related requests\n• Test your API in real-world scenarios\n• Document and share your requests\n\nUpdate the name and overview whenever you’re ready to make it yours.\n\n[Learn more about Postman Collections.](https://learning.postman.com/docs/collections/collections-overview/)",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "53185026",
+    "_collection_link": "https://go.postman.co/collection/53185026-a2881fd4-f75f-4c76-b24a-fb34a0cc7c62?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "locations",
+      "item": [
+        {
+          "name": "/locations",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Successful POST request\", function () {",
+                  "    pm.expect(pm.response.code).to.be.oneOf([200, 201]);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Pabellon Principe Felipe\",\n  \"description\": \"Pabellón deportivo cubierto. Aforo para 10744 espectadores. Inaugurado en 1990\",\n  \"category\": \"Estadio\",\n  \"streetLocated\": \"Cesareo Alierta\",\n  \"postalCode\": 50004,\n  \"registerDate\": \"2026-02-16\",\n  \"disabledAccess\": true,\n  \"longitude\": 41.635339,\n  \"latitude\": -0.866272\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/locations",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "locations"
+              ]
+            },
+            "description": "This is a POST request, submitting data to an API via the request body. This request submits JSON data, and the data is reflected in the response.\n\nA successful POST request typically returns a `200 OK` or `201 Created` response code."
+          },
+          "response": []
+        },
+        {
+          "name": "/locations",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Auditorio de Zaragoza\",\r\n  \"description\": \"Edificio cultural. Diseñado para eventos músicos y artísticos\",\r\n  \"category\": \"Concierto\",\r\n  \"streetLocated\": \"Eduardo Ibarra\",\r\n  \"postalCode\": 50009,\r\n  \"registerDate\": \"2026-02-01\",\r\n  \"disabledAccess\": true,\r\n  \"longitude\": 41.63816,\r\n  \"latitude\": -0.90118\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/locations",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "locations"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/locations",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/locations",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "locations"
+              ]
+            },
+            "description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+          },
+          "response": []
+        },
+        {
+          "name": "/locations?category=category",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/locations?category=Estadio",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "locations"
+              ],
+              "query": [
+                {
+                  "key": "category",
+                  "value": "Estadio"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/locations/:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/locations/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "locations",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/locations/:id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Pabellon Principe Felipe\",\r\n  \"description\": \"Pabellón deportivo cubierto. Aforo para 10744 espectadores. Inaugurado en 1990\",\r\n  \"category\": \"Pabellón\",\r\n  \"streetLocated\": \"Cesareo Alierta\",\r\n  \"postalCode\": 50006,\r\n  \"registerDate\": \"2026-02-16\",\r\n  \"disabledAccess\": false,\r\n  \"longitude\": 41.635339,\r\n  \"latitude\": -0.866272\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/locations/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "locations",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/locations?disabledAccess=true",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/locations?disabledAccess=true",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "locations"
+              ],
+              "query": [
+                {
+                  "key": "disabledAccess",
+                  "value": "true"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/locations?postalCode=:postalCode",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/locations?postalCode=50009",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "locations"
+              ],
+              "query": [
+                {
+                  "key": "postalCode",
+                  "value": "50009"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/locations/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/locations/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "locations",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "usuarios",
+      "item": [
+        {
+          "name": "/usuarios",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"jameps23\",\r\n  \"name\": \"Jaime\",\r\n  \"surname\": \"Alonso\",\r\n  \"birthDate\": \"2006-05-19\",\r\n  \"telephoneNumber\": 697923897\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/usuarios",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "usuarios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/usuerios",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"martin23\",\r\n  \"name\": \"Mariano\",\r\n  \"surname\": \"García\",\r\n  \"birthDate\": \"1987-04-12\",\r\n  \"telephoneNumber\": 697805697\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/usuarios",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "usuarios"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/usuarios/:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/usuarios/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "usuarios",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/usuarios?name=:name",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/usuarios?name=Mariano",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "usuarios"
+              ],
+              "query": [
+                {
+                  "key": "name",
+                  "value": "Mariano"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/usuarios?date:=date",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/usuarios?date=1999-01-01",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "usuarios"
+              ],
+              "query": [
+                {
+                  "key": "date",
+                  "value": "1999-01-01"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/usuarios?active=true",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/usuarios?active=true",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "usuarios"
+              ],
+              "query": [
+                {
+                  "key": "active",
+                  "value": "true"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/usuarios/:id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"martin23\",\r\n  \"name\": \"Mariano\",\r\n  \"surname\": \"Garcia\",\r\n  \"birthDate\": \"1987-04-12\",\r\n  \"telephoneNumber\": 697805697,\r\n  \"active\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/usuarios/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "usuarios",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/usuarios/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/usuarios/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "usuarios",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/usuarios",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/usuarios",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "usuarios"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "artists",
+      "item": [
+        {
+          "name": "/artists",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Dua\",\r\n  \"surname\": \"Lipa\",\r\n  \"genre\": \"Femenino\",\r\n  \"birthDate\": \"1995-08-22\",\r\n  \"type\": \"Cantante\",\r\n  \"followers\": 88000000,\r\n  \"height\": 1.73,\r\n  \"active\": false\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/artists",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "artists"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/artists/:id",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"username\": \"martin23\",\r\n  \"name\": \"Mariano\",\r\n  \"surname\": \"Garcia\",\r\n  \"birthDate\": \"1987-04-12\",\r\n  \"telephoneNumber\": 697805697,\r\n  \"active\": true\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/artists/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "artists",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/artists",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/artists",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "artists"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/artists",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Sofia\",\r\n  \"surname\": \"Garcia\",\r\n  \"genre\": \"Femenino\",\r\n  \"birthDate\": \"1999-10-15\",\r\n  \"type\": \"Actor\",\r\n  \"followers\": 2300890,\r\n  \"height\": 1.7,\r\n  \"active\": true\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/artists",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "artists"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/artists/:id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Sofia\",\r\n  \"surname\": \"Garcia\",\r\n  \"genre\": \"Femenino\",\r\n  \"birthDate\": \"1999-10-15\",\r\n  \"type\": \"Actor\",\r\n  \"followers\": 2300890,\r\n  \"height\": 1.65,\r\n  \"active\": false\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/artists/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "artists",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/artists?type=:type",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/artists?type=Cantante",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "artists"
+              ],
+              "query": [
+                {
+                  "key": "type",
+                  "value": "Cantante"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/artists?active=true",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/artists?active=true",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "artists"
+              ],
+              "query": [
+                {
+                  "key": "active",
+                  "value": "true"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/artists?orderByFollowers=true",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/artists?orderByFollowers=true",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "artists"
+              ],
+              "query": [
+                {
+                  "key": "orderByFollowers",
+                  "value": "true"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/artists/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/artists/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "artists",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "events",
+      "item": [
+        {
+          "name": "/events",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Tour guiado por la aljafería\",\r\n  \"description\": \"Uno de los tours más esperados del año. Realizado por la gran humorista Carlos Gómez y el historiador Jesús Martínez \",\r\n  \"eventDate\": \"2026-04-10\",\r\n  \"category\": \"Cultura\",\r\n  \"capacity\": 27,\r\n  \"price\": 40,\r\n  \"locationId\": 1,\r\n  \"artistsIds\": [1]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/events",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "events"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/events/:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/events/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "events",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/events",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"id\": 12,\r\n  \"name\": \"Concierto de Extremoduro\",\r\n  \"description\": \"Concierto gira despedida del grupo musical Extremoduro\",\r\n  \"eventDate\": \"2024-01-16\",\r\n  \"category\": \"Concierto\",\r\n  \"capacity\": 300,\r\n  \"price\": 50.0,\r\n  \"availability\": true,\r\n  \"locationId\": 1,\r\n  \"artistsIds\": [1]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/events",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "events"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/events/?category=:category",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/events?category=Concierto",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "events"
+              ],
+              "query": [
+                {
+                  "key": "category",
+                  "value": "Concierto"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/events?locationName=:locationName",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/events?locationName=Pabellon Principe Felipe",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "events"
+              ],
+              "query": [
+                {
+                  "key": "locationName",
+                  "value": "Pabellon Principe Felipe"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/events?price=:price",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/events?price=45",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "events"
+              ],
+              "query": [
+                {
+                  "key": "price",
+                  "value": "45"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/events/:id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "  {\r\n    \"name\": \"Avatar Fuego y Cenizas\",\r\n    \"description\": \"Estreno película cine\",\r\n    \"capacity\": 80,\r\n    \"eventDate\": \"2026-08-03\",\r\n    \"category\": \"Pelicula\",\r\n    \"price\": 8,\r\n    \"locationId\": 1,\r\n  \t\"artistsIds\": [1]\r\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/events/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "events",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/events/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/events/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "events",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/events",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"id\": 12,\r\n  \"name\": \"Concierto de Extremoduro\",\r\n  \"description\": \"Concierto gira despedida del grupo musical Extremoduro\",\r\n  \"eventDate\": \"2024-01-16\",\r\n  \"category\": \"Concierto\",\r\n  \"capacity\": 300,\r\n  \"price\": 50.0,\r\n  \"availability\": true,\r\n  \"locationId\": 1,\r\n  \"artistsIds\": [1]\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/events",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "events"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "reviews",
+      "item": [
+        {
+          "name": "/reviews",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"rate\": 1.2,\r\n  \"registerDate\": \"2024-02-11\",\r\n  \"comment\": \"Cero visibilidad. Caro y el personal muy arrogante\",\r\n  \"recommend\": false,\r\n  \"userId\": 1,\r\n  \"eventId\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/reviews",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "reviews"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/reviews/:id",
+          "request": {
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"rate\": 3,\r\n  \"registerDate\": \"2026-05-19\",\r\n  \"comment\": \"Cero visibilidad. Un poco caro\",\r\n  \"visible\": true,\r\n  \"userId\": 1,\r\n  \"eventId\": 1\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/reviews/1",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "reviews",
+                "1"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/reviews",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"rate\": 4,\r\n  \"registerDate\": \"2026-02-11\",\r\n  \"comment\": \"Lo he disfrutado mucho\",\r\n  \"recommend\": true,\r\n  \"userId\": 1,\r\n  \"eventId\": 3\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/reviews",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "reviews"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/reviews",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/reviews",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "reviews"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/reviews/:id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/reviews/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "reviews",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/reviews?username=:username",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/reviews?username=martin23",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "reviews"
+              ],
+              "query": [
+                {
+                  "key": "username",
+                  "value": "martin23"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/reviews?eventName=:eventName",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/reviews?eventName=Visita guiada Aljafería",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "reviews"
+              ],
+              "query": [
+                {
+                  "key": "eventName",
+                  "value": "Visita guiada Aljafería"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/reviews?rate=:rate",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/reviews?rate=3.5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "reviews"
+              ],
+              "query": [
+                {
+                  "key": "rate",
+                  "value": "3.5"
+                }
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "/reviews/:id",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/reviews/2",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "reviews",
+                "2"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "packages": {},
+        "requests": {},
+        "exec": [
+          ""
+        ]
+      }
+    }
+  ]
+}
